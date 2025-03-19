@@ -13,9 +13,9 @@ export default function Login() {
         setError(null);
         try {
             const response = await loginUser(username, password);
-            localStorage.setItem("token", response.data.token); // Store JWT
+            localStorage.setItem("token", response.data.token); // Store JWT token
             alert("Login successful!");
-            navigate("/");
+            navigate("/"); // Redirect to home/dashboard
         } catch (err) {
             setError(err.response?.data || "Login failed.");
         }
