@@ -44,7 +44,9 @@ export default function Pets() {
         }
     };
 
-    const handleDeletePet = async (petId) => {
+    const handleDeletePet = async (petId, petName) => {
+        if (!window.confirm(`Are you sure you want to delete ${petName}?`)) return;
+
         setError(null);
         try {
             await deletePet(token, petId);
@@ -58,7 +60,7 @@ export default function Pets() {
         <div>
             <h1>My Virtual Pets</h1>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p style={{ color: "red", fontWeight: "bold" }}>⚠️ {error}</p>}
 
             <form onSubmit={handleCreatePet}>
                 <input
@@ -85,7 +87,7 @@ export default function Pets() {
                             <button onClick={() => handleAction(pet.id, "placeBet")}>Place Bet</button>
                             <button onClick={() => handleAction(pet.id, "winBig")}>Win Big</button>
                             <button onClick={() => handleAction(pet.id, "goAllIn")}>Go All In</button>
-                            <button onClick={() => handleDeletePet(pet.id)} style={{ color: "red" }}>❌ Delete</button>
+                            <button onClick={() => handleDeletePet(pet.id, pet.name)} style={{ color: "red" }}>❌ Delete</button>
                         </li>
                     ))}
                 </ul>
