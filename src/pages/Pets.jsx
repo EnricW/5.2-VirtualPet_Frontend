@@ -84,9 +84,9 @@ export default function Pets() {
                     {pets.map((pet) => (
                         <li key={pet.id}>
                             <strong>{pet.name}</strong> ({pet.type}) - Chips: {pet.chips}, Luck: {pet.luck}
-                            <button onClick={() => handleAction(pet.id, "placeBet")}>Place Bet</button>
-                            <button onClick={() => handleAction(pet.id, "winBig")}>Win Big</button>
-                            <button onClick={() => handleAction(pet.id, "goAllIn")}>Go All In</button>
+                            <button onClick={() => handleAction(pet.id, "PLACE_BET")}>Place Bet</button>
+                            <button onClick={() => handleAction(pet.id, "WIN_BIG")}>Win Big</button>
+                            <button onClick={() => handleAction(pet.id, "GO_ALL_IN")}>Go All In</button>
                             <button onClick={() => handleDeletePet(pet.id, pet.name)} style={{ color: "red" }}>❌ Delete</button>
                         </li>
                     ))}

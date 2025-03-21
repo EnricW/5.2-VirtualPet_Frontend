@@ -19,7 +19,7 @@ export const getUserPets = async (token) => {
 export const createPet = async (token, name, type) => {
     try {
         const response = await axios.post(
-            "http://localhost:8080/pets/create",
+            "http://localhost:8080/pets",
             { name, type },
             {
                 headers: {
