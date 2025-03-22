@@ -57,43 +57,48 @@ export default function Pets() {
     };
 
     return (
-        <div>
-            <h1>My Virtual Pets</h1>
+        <div className="pets-page">
+            <div className="create-pet-panel">
+                <form onSubmit={handleCreatePet}>
+                    <input
+                        type="text"
+                        placeholder="Pet Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                    <select value={type} onChange={(e) => setType(e.target.value)}>
+                        <option value="HEARTS">Hearts</option>
+                        <option value="DIAMONDS">Diamonds</option>
+                        <option value="CLUBS">Clubs</option>
+                        <option value="SPADES">Spades</option>
+                    </select>
+                    <button type="submit">Create Pet</button>
+                </form>
+            </div>
 
-            {error && <p style={{ color: "red", fontWeight: "bold" }}>⚠️ {error}</p>}
-
-            <form onSubmit={handleCreatePet}>
-                <input
-                    type="text"
-                    placeholder="Pet Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                    <option value="HEARTS">Hearts</option>
-                    <option value="DIAMONDS">Diamonds</option>
-                    <option value="CLUBS">Clubs</option>
-                    <option value="SPADES">Spades</option>
-                </select>
-                <button type="submit">Create Pet</button>
-            </form>
-
-            {pets.length > 0 ? (
-                <ul>
-                    {pets.map((pet) => (
-                        <li key={pet.id}>
-                            <strong>{pet.name}</strong> ({pet.type}) - Chips: {pet.chips}, Luck: {pet.luck}
-                            <button onClick={() => handleAction(pet.id, "PLACE_BET")}>Place Bet</button>
-                            <button onClick={() => handleAction(pet.id, "WIN_BIG")}>Win Big</button>
-                            <button onClick={() => handleAction(pet.id, "GO_ALL_IN")}>Go All In</button>
-                            <button onClick={() => handleDeletePet(pet.id, pet.name)} style={{ color: "red" }}>❌ Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No pets found. Create one!</p>
-            )}
+            <div className="pet-list-panel">
+                {pets.length > 0 ? (
+                    <div className="pet-grid">
+                        {pets.map((pet) => (
+                            <div className="pet-card" key={pet.id}>
+                                <h2>{pet.name}</h2>
+                                <p><strong>Type:</strong> {pet.type}</p>
+                                <p><strong>Chips:</strong> {pet.chips}</p>
+                                <p><strong>Luck:</strong> {pet.luck}</p>
+                                <div className="pet-buttons">
+                                    <button onClick={() => handleAction(pet.id, "PLACE_BET")}>🎲 Place Bet</button>
+                                    <button onClick={() => handleAction(pet.id, "WIN_BIG")}>💰 Win Big</button>
+                                    <button onClick={() => handleAction(pet.id, "GO_ALL_IN")}>♠️ Go All In</button>
+                                    <button onClick={() => handleDeletePet(pet.id, pet.name)} className="danger">❌ Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No pets found. Create one!</p>
+                )}
+            </div>
         </div>
     );
 }

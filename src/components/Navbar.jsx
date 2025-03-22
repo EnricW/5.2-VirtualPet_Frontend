@@ -6,19 +6,21 @@ export default function Navbar() {
     const { token, logout } = useContext(AuthContext);
 
     return (
-        <nav style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
-            <Link to="/">🏠 Home</Link> |{" "}
-            {token ? (
-                <>
-                    <Link to="/pets">🐾 My Pets</Link> |{" "}
-                    <button onClick={logout} style={{ color: "red" }}>🚪 Logout</button>
-                </>
-            ) : (
-                <>
-                    <Link to="/login">🔑 Login</Link> |{" "}
-                    <Link to="/register">📝 Register</Link>
-                </>
-            )}
+        <nav className="navbar">
+            <div className="navbar-content">
+                <Link to="/">🏠 Home</Link>
+                {token ? (
+                    <div className="nav-links">
+                        <Link to="/pets">🐾 My Pets</Link>
+                        <button onClick={logout}>🚪 Logout</button>
+                    </div>
+                ) : (
+                    <div className="nav-links">
+                        <Link to="/login">🔑 Login</Link>
+                        <Link to="/register">📝 Register</Link>
+                    </div>
+                )}
+            </div>
         </nav>
     );
 }

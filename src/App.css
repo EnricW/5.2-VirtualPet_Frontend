@@ -1,19 +1,30 @@
+:root {
+  --navbar-height: 60px;
+  --form-height: 80px;
+}
+
+/* Base layout */
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem;
+  padding-top: 80px;
+  /* offset for navbar */
   text-align: center;
 }
 
+/* Logo Animation (default template) */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +33,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +51,215 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Auth Form */
+.auth-container {
+  width: 400px;
+  margin: 100px auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #f4f4f4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.auth-container h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #222;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-container input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.auth-container input:focus {
+  border-color: #646cff;
+  outline: none;
+}
+
+.auth-container button {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+  background-color: #535bf2;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #01431E;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.navbar a,
+.navbar button {
+  all: unset;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Pets Page Layout */
+.pets-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
+}
+
+/* Create Pet Panel */
+.create-pet-panel {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background-color: #f0f0f0;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 999;
+}
+
+.create-pet-panel form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.create-pet-panel input,
+.create-pet-panel select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.create-pet-panel button {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-pet-panel button:hover {
+  background-color: #535bf2;
+}
+
+/* Pet List Panel */
+.pet-list-panel {
+  margin-top: calc(var(--navbar-height) + var(--form-height));
+  overflow-y: auto;
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Pet Cards Grid */
+.pet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pet-card {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.pet-card h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+/* Pet Buttons */
+.pet-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pet-buttons button {
+  flex: 1 1 45%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #646cff;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pet-buttons button:hover {
+  background-color: #535bf2;
+}
+
+.pet-buttons .danger {
+  background-color: #ff4d4d;
+}
+
+.pet-buttons .danger:hover {
+  background-color: #cc0000;
 }
