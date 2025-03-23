@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
-    const { token, logout } = useContext(AuthContext);
+    const { token, logout, role } = useContext(AuthContext);
 
     return (
         <nav className="navbar">
@@ -11,7 +11,9 @@ export default function Navbar() {
                 <Link to="/">🏠 Home</Link>
                 {token ? (
                     <div className="nav-links">
-                        <Link to="/pets">🐾 My Pets</Link>
+                        <Link to="/pets">
+                            {role === "ROLE_ADMIN" ? "🛠️ Admin Panel" : "🐾 My Pets"}
+                        </Link>
                         <button onClick={logout}>🚪 Logout</button>
                     </div>
                 ) : (

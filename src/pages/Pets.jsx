@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { getUserPets, createPet, performPetAction, deletePet } from "../services/petService";
 
 export default function Pets() {
-    const { token } = useContext(AuthContext);
+    const { token, role } = useContext(AuthContext);
     const [pets, setPets] = useState([]);
     const [name, setName] = useState("");
     const [type, setType] = useState("HEARTS");
