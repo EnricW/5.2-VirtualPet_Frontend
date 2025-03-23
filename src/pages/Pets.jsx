@@ -8,6 +8,12 @@ export default function Pets() {
     const [name, setName] = useState("");
     const [type, setType] = useState("HEARTS");
     const [error, setError] = useState(null);
+    const petImages = {
+        HEARTS: '/assets/hearts.png',
+        SPADES: '/assets/spades.png',
+        CLUBS: '/assets/clubs.png',
+        DIAMONDS: '/assets/diamonds.png',
+    };
 
     useEffect(() => {
         const fetchPets = async () => {
@@ -82,10 +88,19 @@ export default function Pets() {
                     <div className="pet-grid">
                         {pets.map((pet) => (
                             <div className="pet-card" key={pet.id}>
-                                <h2>{pet.name}</h2>
-                                <p><strong>Type:</strong> {pet.type}</p>
-                                <p><strong>Chips:</strong> {pet.chips}</p>
-                                <p><strong>Luck:</strong> {pet.luck}</p>
+                                <div className="pet-card-main">
+                                    <img
+                                        src={petImages[pet.type]}
+                                        alt={`${pet.type} icon`}
+                                        className="pet-image"
+                                    />
+                                    <div className="pet-info">
+                                        <h2>{pet.name}</h2>
+                                        <p><strong>Type:</strong> {pet.type}</p>
+                                        <p><strong>Chips:</strong> {pet.chips}</p>
+                                        <p><strong>Luck:</strong> {pet.luck}</p>
+                                    </div>
+                                </div>
                                 <div className="pet-buttons">
                                     <button onClick={() => handleAction(pet.id, "PLACE_BET")}>🎲 Place Bet</button>
                                     <button onClick={() => handleAction(pet.id, "WIN_BIG")}>💰 Win Big</button>
