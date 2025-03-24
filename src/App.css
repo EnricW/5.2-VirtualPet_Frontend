@@ -153,6 +153,8 @@ body {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  background-color: #fff;
+  color: #222;
 }
 
 .create-pet-panel button {
