@@ -239,12 +239,39 @@ body {
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  max-width: 100%;
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .pet-info {
   flex: 1;
   text-align: left;
+}
+
+/* Chips Bar */
+
+.chips-bar-wrapper {
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.chips-bar {
+  height: 16px;
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.chips-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #ffcc00, #ff9900);
+  transition: width 0.4s ease;
 }
 
 /* Pet Buttons */

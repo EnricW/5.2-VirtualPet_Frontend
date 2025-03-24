@@ -165,21 +165,47 @@ export default function Pets() {
                                             }
                                             alt={`${pet.type} icon`}
                                             className={`pet-image ${petBounceMap[pet.id] ? 'bounce' : ''}`}
-                                            onClick={() => triggerBounce(pet.id)}
+                                            onClick={() => {
+                                                triggerBounce(pet.id); // optional visual effect
+                                                handleAction(pet.id, "INTERACT"); // trigger INTERACT on click
+                                            }}
                                         />
                                         <div className="pet-info-panel">
                                             <div className="pet-info">
                                                 <h2>{pet.name}</h2>
-                                                <p><strong>Type:</strong> {pet.type}</p>
-                                                <p><strong>Chips:</strong> {pet.chips}</p>
-                                                <p><strong>Luck:</strong> {pet.luck}</p>
+                                                <p>
+                                                    <strong>Type:</strong>{" "}
+                                                    {{
+                                                        HEARTS: "♥️",
+                                                        DIAMONDS: "♦️",
+                                                        CLUBS: "♣️",
+                                                        SPADES: "♠️"
+                                                    }[pet.type] || "❓"}
+                                                </p>
+                                                <p>
+                                                    <strong>Luck:</strong>{" "}
+                                                    {{
+                                                        HAPPY: "😎",
+                                                        OKAY: "🙂",
+                                                        UNHAPPY: "😐",
+                                                        BANKRUPT: "😢"
+                                                    }[pet.luck] || "❓"}
+                                                </p>
+                                                <div className="chips-bar-wrapper">
+                                                    <span><strong>Chips:</strong> {pet.chips}</span>
+                                                    <div className="chips-bar">
+                                                        <div
+                                                            className="chips-bar-fill"
+                                                            style={{ width: `${Math.min(pet.chips, 100)}%` }}
+                                                        ></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="pet-buttons">
-                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "PLACE_BET"); }}>🎲 Place Bet</button>
-                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "WIN_BIG"); }}>💰 Win Big</button>
-                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "GO_ALL_IN"); }}>♠️ Go All In</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "FEED"); }}>🎲 Feed</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "PLAY"); }}>💰 Play</button>
                                         <button onClick={(e) => { e.stopPropagation(); handleDeletePet(pet.id, pet.name); }} className="danger">❌ Delete</button>
                                     </div>
                                 </div>
