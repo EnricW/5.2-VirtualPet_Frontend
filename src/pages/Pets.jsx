@@ -125,68 +125,70 @@ export default function Pets() {
                         required
                     />
                     <select value={type} onChange={(e) => setType(e.target.value)}>
-                        <option value="HEARTS">Hearts</option>
-                        <option value="DIAMONDS">Diamonds</option>
-                        <option value="CLUBS">Clubs</option>
-                        <option value="SPADES">Spades</option>
+                        <option value="HEARTS">♥️ Hearts</option>
+                        <option value="DIAMONDS">♦️ Diamonds</option>
+                        <option value="CLUBS">♣️ Clubs</option>
+                        <option value="SPADES">♠️ Spades</option>
                     </select>
                     <button type="submit">Create Pet</button>
                 </form>
             </div>
 
             <div className="pet-list-panel">
-                {pets.length > 0 ? (
-                    <div className="pet-grid">
-                        {pets.map((pet) => (
-                            <div
-                                className="pet-card"
-                                key={pet.id}
-                                style={{
-                                    backgroundImage: `url('/assets/${backgroundMap[pet.id] || defaultBackground}')`,
-                                    backgroundSize: "cover",
-                                    backgroundPosition: "center",
-                                    position: "relative"
-                                }}
-                            >
+                <div className="pet-list-wrapper">
+                    {pets.length > 0 ? (
+                        <div className="pet-grid">
+                            {pets.map((pet) => (
                                 <div
-                                    className="cycle-icon"
-                                    title="Change Background"
-                                    onClick={() => cycleBackground(pet.id)}
+                                    className="pet-card"
+                                    key={pet.id}
+                                    style={{
+                                        backgroundImage: `url('/assets/${backgroundMap[pet.id] || defaultBackground}')`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                        position: "relative"
+                                    }}
                                 >
-                                    🖼️
-                                </div>
-                                <div className="pet-card-main">
-                                    <img
-                                        src={
-                                            petLaughMap[pet.id]
-                                                ? petLaughImages[pet.type]
-                                                : petImages[pet.type]
-                                        }
-                                        alt={`${pet.type} icon`}
-                                        className={`pet-image ${petBounceMap[pet.id] ? 'bounce' : ''}`}
-                                        onClick={() => triggerBounce(pet.id)}
-                                    />
-                                    <div className="pet-info-panel">
-                                        <div className="pet-info">
-                                            <h2>{pet.name}</h2>
-                                            <p><strong>Type:</strong> {pet.type}</p>
-                                            <p><strong>Chips:</strong> {pet.chips}</p>
-                                            <p><strong>Luck:</strong> {pet.luck}</p>
+                                    <div
+                                        className="cycle-icon"
+                                        title="Change Background"
+                                        onClick={() => cycleBackground(pet.id)}
+                                    >
+                                        🖼️
+                                    </div>
+                                    <div className="pet-card-main">
+                                        <img
+                                            src={
+                                                petLaughMap[pet.id]
+                                                    ? petLaughImages[pet.type]
+                                                    : petImages[pet.type]
+                                            }
+                                            alt={`${pet.type} icon`}
+                                            className={`pet-image ${petBounceMap[pet.id] ? 'bounce' : ''}`}
+                                            onClick={() => triggerBounce(pet.id)}
+                                        />
+                                        <div className="pet-info-panel">
+                                            <div className="pet-info">
+                                                <h2>{pet.name}</h2>
+                                                <p><strong>Type:</strong> {pet.type}</p>
+                                                <p><strong>Chips:</strong> {pet.chips}</p>
+                                                <p><strong>Luck:</strong> {pet.luck}</p>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="pet-buttons">
+                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "PLACE_BET"); }}>🎲 Place Bet</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "WIN_BIG"); }}>💰 Win Big</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "GO_ALL_IN"); }}>♠️ Go All In</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleDeletePet(pet.id, pet.name); }} className="danger">❌ Delete</button>
+                                    </div>
                                 </div>
-                                <div className="pet-buttons">
-                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "PLACE_BET"); }}>🎲 Place Bet</button>
-                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "WIN_BIG"); }}>💰 Win Big</button>
-                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "GO_ALL_IN"); }}>♠️ Go All In</button>
-                                    <button onClick={(e) => { e.stopPropagation(); handleDeletePet(pet.id, pet.name); }} className="danger">❌ Delete</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p>No pets found. Create one!</p>
-                )}
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No pets found. Create one!</p>
+                    )}
+                </div>
             </div>
         </div>
     );
