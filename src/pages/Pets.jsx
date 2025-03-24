@@ -22,8 +22,16 @@ export default function Pets() {
         CLUBS: '/assets/clubs.png',
         DIAMONDS: '/assets/diamonds.png',
     };
+    const petLaughImages = {
+        HEARTS: '/assets/hearts_laugh.png',
+        SPADES: '/assets/spades_laugh.png',
+        CLUBS: '/assets/clubs_laugh.png',
+        DIAMONDS: '/assets/diamonds_laugh.png',
+    };
 
     const [backgroundMap, setBackgroundMap] = useState({});
+    const [petBounceMap, setPetBounceMap] = useState({});
+    const [petLaughMap, setPetLaughMap] = useState({});
 
     useEffect(() => {
         const fetchPets = async () => {
@@ -95,6 +103,16 @@ export default function Pets() {
         });
     };
 
+    const triggerBounce = (petId) => {
+        setPetBounceMap((prev) => ({ ...prev, [petId]: true }));
+        setPetLaughMap((prev) => ({ ...prev, [petId]: true }));
+
+        setTimeout(() => {
+            setPetBounceMap((prev) => ({ ...prev, [petId]: false }));
+            setPetLaughMap((prev) => ({ ...prev, [petId]: false }));
+        }, 600); // match bounce duration
+    };
+
     return (
         <div className="pets-page">
             <div className="create-pet-panel">
@@ -127,15 +145,26 @@ export default function Pets() {
                                     backgroundImage: `url('/assets/${backgroundMap[pet.id] || defaultBackground}')`,
                                     backgroundSize: "cover",
                                     backgroundPosition: "center",
+                                    position: "relative"
                                 }}
-                                onClick={() => cycleBackground(pet.id)}
-                                title="Click to change background"
                             >
+                                <div
+                                    className="cycle-icon"
+                                    title="Change Background"
+                                    onClick={() => cycleBackground(pet.id)}
+                                >
+                                    🖼️
+                                </div>
                                 <div className="pet-card-main">
                                     <img
-                                        src={petImages[pet.type]}
+                                        src={
+                                            petLaughMap[pet.id]
+                                                ? petLaughImages[pet.type]
+                                                : petImages[pet.type]
+                                        }
                                         alt={`${pet.type} icon`}
-                                        className="pet-image"
+                                        className={`pet-image ${petBounceMap[pet.id] ? 'bounce' : ''}`}
+                                        onClick={() => triggerBounce(pet.id)}
                                     />
                                     <div className="pet-info-panel">
                                         <div className="pet-info">
