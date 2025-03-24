@@ -8,6 +8,14 @@ export default function Pets() {
     const [name, setName] = useState("");
     const [type, setType] = useState("HEARTS");
     const [error, setError] = useState(null);
+
+    const defaultBackground = "mountain.webp";
+    const backgrounds = [
+        "kingdom.webp",
+        "forest.webp",
+        "mountain.webp",
+        "waterfall.webp"
+    ];
     const petImages = {
         HEARTS: '/assets/hearts.png',
         SPADES: '/assets/spades.png',
@@ -15,11 +23,18 @@ export default function Pets() {
         DIAMONDS: '/assets/diamonds.png',
     };
 
+    const [backgroundMap, setBackgroundMap] = useState({});
+
     useEffect(() => {
         const fetchPets = async () => {
             try {
                 const data = await getUserPets(token);
                 setPets(data);
+                const initialBackgrounds = {};
+                data.forEach((pet) => {
+                    initialBackgrounds[pet.id] = defaultBackground;
+                });
+                setBackgroundMap(initialBackgrounds);
             } catch (err) {
                 setError(err.response?.data || "Failed to load pets.");
             }
@@ -34,6 +49,10 @@ export default function Pets() {
         try {
             const newPet = await createPet(token, name, type);
             setPets([...pets, newPet]);
+            setBackgroundMap((prev) => ({
+                ...prev,
+                [newPet.id]: defaultBackground,
+            }));
             setName("");
         } catch (err) {
             setError(err.response?.data || "Failed to create pet.");
@@ -56,10 +75,24 @@ export default function Pets() {
         setError(null);
         try {
             await deletePet(token, petId);
-            setPets(pets.filter((pet) => pet.id !== petId)); // Remove pet from list
+            setPets(pets.filter((pet) => pet.id !== petId));
+            setBackgroundMap((prev) => {
+                const updated = { ...prev };
+                delete updated[petId];
+                return updated;
+            });
         } catch (err) {
             setError(err.response?.data || "Failed to delete pet.");
         }
+    };
+
+    const cycleBackground = (petId) => {
+        setBackgroundMap((prev) => {
+            const current = prev[petId] || defaultBackground;
+            const currentIndex = backgrounds.indexOf(current);
+            const next = backgrounds[(currentIndex + 1) % backgrounds.length];
+            return { ...prev, [petId]: next };
+        });
     };
 
     return (
@@ -87,25 +120,37 @@ export default function Pets() {
                 {pets.length > 0 ? (
                     <div className="pet-grid">
                         {pets.map((pet) => (
-                            <div className="pet-card" key={pet.id}>
+                            <div
+                                className="pet-card"
+                                key={pet.id}
+                                style={{
+                                    backgroundImage: `url('/assets/${backgroundMap[pet.id] || defaultBackground}')`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center",
+                                }}
+                                onClick={() => cycleBackground(pet.id)}
+                                title="Click to change background"
+                            >
                                 <div className="pet-card-main">
                                     <img
                                         src={petImages[pet.type]}
                                         alt={`${pet.type} icon`}
                                         className="pet-image"
                                     />
-                                    <div className="pet-info">
-                                        <h2>{pet.name}</h2>
-                                        <p><strong>Type:</strong> {pet.type}</p>
-                                        <p><strong>Chips:</strong> {pet.chips}</p>
-                                        <p><strong>Luck:</strong> {pet.luck}</p>
+                                    <div className="pet-info-panel">
+                                        <div className="pet-info">
+                                            <h2>{pet.name}</h2>
+                                            <p><strong>Type:</strong> {pet.type}</p>
+                                            <p><strong>Chips:</strong> {pet.chips}</p>
+                                            <p><strong>Luck:</strong> {pet.luck}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="pet-buttons">
-                                    <button onClick={() => handleAction(pet.id, "PLACE_BET")}>🎲 Place Bet</button>
-                                    <button onClick={() => handleAction(pet.id, "WIN_BIG")}>💰 Win Big</button>
-                                    <button onClick={() => handleAction(pet.id, "GO_ALL_IN")}>♠️ Go All In</button>
-                                    <button onClick={() => handleDeletePet(pet.id, pet.name)} className="danger">❌ Delete</button>
+                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "PLACE_BET"); }}>🎲 Place Bet</button>
+                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "WIN_BIG"); }}>💰 Win Big</button>
+                                    <button onClick={(e) => { e.stopPropagation(); handleAction(pet.id, "GO_ALL_IN"); }}>♠️ Go All In</button>
+                                    <button onClick={(e) => { e.stopPropagation(); handleDeletePet(pet.id, pet.name); }} className="danger">❌ Delete</button>
                                 </div>
                             </div>
                         ))}
